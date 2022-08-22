@@ -17,7 +17,6 @@ async def read_main():
 
 
 
-# Get ---> http://localhost:8000/
 @app.get('/heros', response_model=List[Hero], status_code=status.HTTP_200_OK)
 async def get_all_hero():
     ''' Get all heros '''
@@ -37,8 +36,7 @@ async def get_a_hero(hero_id: int):
 
     return result
 
-# Post ---> http://localhost:8000/create/heros/
-@app.post('/create/heros/', response_model=Hero)
+@app.post('/create/heros', response_model=Hero)
 async def create_new_heros(hero:Hero):
     ''' Create a new hero '''
     statement = Hero(name=hero.name,secret_name=hero.secret_name,age=hero.age)
@@ -48,9 +46,8 @@ async def create_new_heros(hero:Hero):
 
     return {"message": "Hero created successfully", "hero": statement, "status": status.HTTP_201_CREATED}
 
-# Put ---> http://localhost:8000/heros/{hero_id}/update/
 
-@app.put('/heros/{hero_id}/update/',response_model=Hero)
+@app.put('/heros/{hero_id}/update',response_model=Hero)
 async def update_hero_model(hero_id:int,hero:Hero):
     statement=select(Hero).where(Hero.id==hero_id)
 
@@ -65,7 +62,6 @@ async def update_hero_model(hero_id:int,hero:Hero):
     return {"message": "Hero updated successfully", "hero": result}
 
 
-# Delete ---> http://localhost:8000
 @app.delete('/heros/{hero_id}/delete', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_heros(hero_id: int):
     ''' Delete a hero '''
